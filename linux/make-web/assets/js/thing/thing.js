@@ -1,3 +1,3 @@
 App.Checkout = function(){
-  console.log("PPuke on you");
+  console.log("Puke on you");
 };
