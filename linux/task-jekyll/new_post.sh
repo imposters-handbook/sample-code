@@ -3,7 +3,7 @@ function new_post(){
     SLUGIFIED="$(echo -n "$1" | sed -e 's/[^[:alnum:]]/-/g' | tr -s '-' | tr A-Z a-z)"
     SLUG=$(date +"%Y-%m-%d"-$SLUGIFIED.md)
 
-    echo <<front_matter > $SLUG
+    cat <<front_matter > $SLUG
 ---
 layout: post-minimal
 title: '$1'
