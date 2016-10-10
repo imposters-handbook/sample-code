@@ -1,0 +1,2 @@
+defmodule MyProject do
+end

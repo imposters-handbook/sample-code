@@ -1,1 +1,0 @@
-var App={storeName:"Amazing Place"};App.sayHello=function(){console.log("Hi there")};App.Cart=function(){console.log("Buy some stuff!")};App.Checkout=function(){console.log("Checking out!")};App.Checkout=function(){console.log("PPuke on you")};
