@@ -16,11 +16,11 @@ function binarySearch(list, lookFor) {
       //the list is sorted, so if we're looking too low...
       if (list[middle] < lookFor) {
         //increase the mininum
-        min = guess + 1;
+        min++;
       }
       else {
         //decrease the max
-        max = guess - 1;
+        max--;
       }
     }
   }
