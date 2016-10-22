@@ -11,7 +11,7 @@ function selectionSort(list) {
       //if the current list item is less than the current min value...
       if (list[x] < list[currentMinIndex]) {
         //reset the index
-        currentMinIndex = x; //Change the current min number position if a smaller num is found
+        currentMinIndex = x;
       }
     }
     //has the index changed?

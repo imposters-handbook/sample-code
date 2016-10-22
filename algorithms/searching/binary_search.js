@@ -24,7 +24,6 @@ function binarySearch(list, lookFor) {
       }
     }
   }
-
   return -1;
 }
 
