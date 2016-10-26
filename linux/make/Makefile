@@ -61,6 +61,22 @@ clean:
 #
 # .PHONY: all clean
 
+
+###################### Step 4.5
+# all: dist app.js
+#
+# dist:
+# 	@ mkdir -p $@
+#
+# app.js:
+# 	@ cp src/app.js dist/app.js
+#
+# clean:
+# 	@ rm -rf dist
+#
+# .PHONY: all clean
+
+
 ###################### Step 5
 # JS_FILES=src/app.js
 # DIST=dist
@@ -70,7 +86,7 @@ clean:
 # all: dist app.js
 #
 # dist:
-# 	@ mkdir -p $(DIST)
+# 	@ mkdir -p $@
 #
 # app.js:
 #   @ echo $(TIMESTAMP) > $(DIST)/$@
@@ -90,7 +106,7 @@ clean:
 # all: $(DIST) app.js
 #
 # $(DIST):
-# 	@ mkdir $@
+# 	@ mkdir -p $@
 #
 # app.js:
 # 	@ echo $(TIMESTAMP) > $(DIST)/$@
