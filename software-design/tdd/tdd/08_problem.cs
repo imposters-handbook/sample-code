@@ -5,21 +5,18 @@ using Xunit;
 
 namespace BillingSystem.Tests8
 {
-  public interface ICustomerRepository
-  {
+  public interface ICustomerRepository {
     Customer [] Customers ();
   }
   public interface ICreditCardCharger { }
-  public class MonthlyChargeTests
-  {
+  public class MonthlyChargeTests {
 
     ICustomerRepository repo;
     ICreditCardCharger charger;
     BillingDoohickey thing;
     Mock<ICustomerRepository> repoMock;
 
-    public MonthlyChargeTests ()
-    {
+    public MonthlyChargeTests () {
       repoMock = new Mock<ICustomerRepository> ();
       repo = repoMock.Object;
       charger = new Mock<ICreditCardCharger> ().Object;
@@ -27,8 +24,7 @@ namespace BillingSystem.Tests8
     }
 
     [Fact]
-    public void Customers_With_Subscriptions_Due_Are_Charged ()
-    {
+    public void Customers_With_Subscriptions_Due_Are_Charged () {
       repoMock.Setup (r => r.Customers ())
           .Returns (new Customer [] { new Customer () });
 
@@ -37,8 +33,7 @@ namespace BillingSystem.Tests8
     }
 
     [Fact]
-    public void Customers_With_No_Subscriptions_Due_Are_Not_Charged ()
-    {
+    public void Customers_With_No_Subscriptions_Due_Are_Not_Charged () {
       repoMock.Setup (r => r.Customers ())
               .Returns (new Customer [] { });
 
@@ -47,8 +42,7 @@ namespace BillingSystem.Tests8
     }
 
     [Fact]
-    public void A_Customer_With_Two_Subscriptions_Due_Is_Charged_Twice ()
-    {
+    public void A_Customer_With_Two_Subscriptions_Due_Is_Charged_Twice () {
       var customer = new Customer ();
       customer.Subscriptions.Add (new Subscription ());
       customer.Subscriptions.Add (new Subscription ());
@@ -65,27 +59,23 @@ namespace BillingSystem.Tests8
   public class BillingDoohickey
   {
     ICustomerRepository _repo;
-    public BillingDoohickey (ICustomerRepository repo, ICreditCardCharger charger)
-    {
+    public BillingDoohickey (ICustomerRepository repo, ICreditCardCharger charger){
       _repo = repo;
     }
-    public int ProcessMonth (int year, int month)
-    {
+    public int ProcessMonth (int year, int month){
       var customer = _repo.Customers ().FirstOrDefault ();
       if (customer == null) {
         return 0;
       } else {
         return customer.Subscriptions.Count ();
       }
-     
+
     }
   }
-  public class Customer
-  {
+  public class Customer {
     public IList<Subscription> Subscriptions { get; set;}
 
-    public Customer ()
-    {
+    public Customer () {
       this.Subscriptions = new List<Subscription> ();
     }
   }

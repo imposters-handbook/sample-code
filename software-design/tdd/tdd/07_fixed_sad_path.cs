@@ -47,8 +47,8 @@ namespace BillingSystem.Tests7
   public class BillingDoohickey
   {
     ICustomerRepository _repo;
-    public BillingDoohickey (ICustomerRepository repo, ICreditCardCharger charger)
-    {
+    public BillingDoohickey (ICustomerRepository repo,
+                             ICreditCardCharger charger) {
       _repo = repo;
     }
     public int ProcessMonth (int year, int month)
@@ -56,8 +56,5 @@ namespace BillingSystem.Tests7
       return _repo.Customers ().Length;
     }
   }
-  public class Customer
-  {
-
-  }
+  public class Customer {}
 }
