@@ -1,26 +1,26 @@
 ###################### Step 1
 
-# all:
-#
-# clean:
-#
-# .PHONY: all
+all:
+
+clean:
+
+.PHONY: all
 
 
 ###################### Step 2
 
-# SASS=node_modules/.bin/node-sass
-# SASS_FILES=assets/sass/main.scss
-# JS_FILES=assets/js/*.js
-# UGLIFY=node_modules/.bin/uglifyjs
-# DIST_CSS=public/css
-# DIST_JS=public/js
-#
-# all:
-#
-# clean:
-#
-# .PHONY: all
+SASS=node_modules/.bin/node-sass
+SASS_FILES=assets/sass/main.scss
+JS_FILES=assets/js/*.js
+UGLIFY=node_modules/.bin/uglifyjs
+DIST_CSS=public/css
+DIST_JS=public/js
+
+all:
+
+clean:
+
+.PHONY: all
 
 
 ###################### Final

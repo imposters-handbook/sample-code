@@ -29,6 +29,8 @@ namespace BillingSystem.Tests6 {
     }
 
   }
+  //...
+  
   public class BillingDoohickey
   {
     public BillingDoohickey (ICustomerRepository repo,

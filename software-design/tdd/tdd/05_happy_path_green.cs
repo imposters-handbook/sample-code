@@ -1,10 +1,9 @@
 ﻿using Moq;
 using Xunit;
-
 namespace BillingSystem.Tests5 {
   public interface ICustomerRepository { }
   public interface ICreditCardCharger { }
-  public class BillingDoohickeyTests3 {
+  public class MonthlyChargeTests {
 
     [Fact]
     public void Customers_With_Subscriptions_Due_Are_Charged () {
@@ -19,7 +18,7 @@ namespace BillingSystem.Tests5 {
     //Idle customers should be automatically unsubscribed
   }
   public class BillingDoohickey {
-    public BillingDoohickey (ICustomerRepository repo, 
+    public BillingDoohickey (ICustomerRepository repo,
                              ICreditCardCharger charger){}
     public int ProcessMonth (int year, int month){
       return 1; //do just enough
