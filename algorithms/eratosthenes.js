@@ -1,76 +1,27 @@
-function sieve(n){
-
-  var list = [];
-
-  //load the list, defaulting to "true" as unmarked
-  for(var i = 2; i <= n; i++){
-    list[i]={index : i, value: true};
+const sieve = (n) => {
+  //build the grid we'll use for multipliers
+  //you can use an array here or an object
+  //I think objects read easier
+  var grid = {};
+  for (var i = 2; i <= n; i++) {
+    grid[i]={marked: false};
   }
-
-  //figure out our multiplier limit
-  var limit = Math.sqrt(n);
-
-  //run over the list, starting at 2
-  for(var i = 2; i <= limit; i++){
-    for(var x = i + i; x <= n; x+=i){
-      //set all multiples of i to false
-      list[x]=false;
+  //the multiplier limit
+  const limit = Math.sqrt(n);
+  //loop up to limit
+  for (var i = 2; i <= limit; i++) {
+    //figure out the multiples of i
+    for(var x = i + i; x <= n; x += i){
+      //mark the multiples of i
+      grid[x].marked = true;
     }
   }
-  //build an output array
-  var out = [];
-  for(var i = 2; i <= n; i++){
-    //if the list value is true, push the index
-    if(list[i]) out.push(i);
+  //the ouput - only return the numbers
+  //from the grid that weren't marked
+  var out =[];
+  for (var i = 2; i <= n; i++) {
+    if(!grid[i].marked) out.push(i);
   }
   return out;
-}
-
-Array.prototype.head = function(){
-  if(this.length > 0) return this[0];
-  else return null;
-}
-Array.prototype.tail = function(){
-  if(this.length > 0) return this.slice(1, this.length);
-  else return null;
-}
-
-
-var recurseInto = function(list, fn, skip){
-  var h = list.head();
-  var t = list.tail();
-
-  if(fn && h) fn(h);
-  if(t) recurseInto(t, fn);
-}
-
-
-//recursive variety
-var sieveTwo = function(n){
-  var list = [];
-
-  //load the list, defaulting to "true" as unmarked
-  for(var i = 2; i <= n; i++){
-    list[i]={index : i, value: true};
-  }
-  //figure out our multiplier limit
-  var limit = Math.sqrt(n);
-
-  //iterate over each multiplier, starting with 4
-  for(var i = 2; i <= limit; i++){
-    recurseInto(list, function(val){
-      //is it eligible?
-      if(val.index > i && val.value){
-        //is it a multiple of i?
-        if(val.index % i === 0) val.value = false;
-      }
-    });
-  }
-
-  //build an output
-  var out = [];
-  recurseInto(list, function(val){
-    if(val.value) out.push(val.index);
-  });
-  return out;
-}
+};
+console.log(sieve(100));

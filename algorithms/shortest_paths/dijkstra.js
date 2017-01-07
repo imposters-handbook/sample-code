@@ -1,81 +1,62 @@
-
-//our memoization table, which I'll set to an object
-//defaulting as described
-var MemoTable = function(){
-  //the internal representation of our memoization table
-  var table = [
-    {name: "S", cost: 0, visited: false},
-    {name: "A", cost: Number.POSITIVE_INFINITY, visited: false},
-    {name: "B", cost: Number.POSITIVE_INFINITY, visited: false},
-    {name: "C", cost: Number.POSITIVE_INFINITY, visited: false},
-    {name: "D", cost: Number.POSITIVE_INFINITY, visited: false},
-    {name: "E", cost: Number.POSITIVE_INFINITY, visited: false}
-  ];
-
-  //returns all unvisited vertices
-  var getCandidateVertices = function(){
-    return table.filter(function(entry){
-      return entry.visited === false;
-    });
-  };
-
-  //returns the entry for vertex S
-  this.source = function(){
-    return this.getEntry("S");
-  }
-
-  //returns the next unvisited vertex with least cost
-  this.nextVertex = function(){
-    var candidates = getCandidateVertices();
-
-    //return the lowest
-    if(candidates.length > 0){
-      return candidates.reduce(function(prev, curr){
-        return prev.cost < curr.cost ? prev : curr;
-      });
-    }else{
-      return null;
+//The memoization table, which needs to have some smarts
+//using an ES6 class here
+class MemoTable{
+  //build the table using the passed-in vertices
+  constructor(vertices){
+    //set the root manually
+    this.S = {name: "S", cost: 0, visited: false};
+    this.table = [this.S];
+    //add the vertices, defaulting cost to infinity and visited to false
+    for(var vertex of vertices){
+      this.table.push({name: vertex, cost: Number.POSITIVE_INFINITY, visited: false});
     }
   };
-
-  //sets the cost of a given vertex in our table
-  this.setCurrentCost = function(vertex, cost){
-    var entry = this.getEntry(vertex);
-    //set the cost
-    entry.cost = cost;
+  //all non-visited vertices
+  getCandidateVertices(){
+   return this.table.filter(entry => {
+     return entry.visited === false;
+   });
   };
-
-  //marks the vertex as visited
-  this.setAsVisited = function(vertex){
-    var entry = this.getEntry(vertex);
-    //mark the vertex as visited
-    entry.visited = true;
-  }
-
-  //returns a single entry in our table
-  this.getEntry = function(vertex){
-    return table.filter(function(entry){
-      return entry.name === vertex;
-    })[0];
-  }
-
-  //returns the cost associated with reaching
-  //a given vertex from the source
-  this.getCost = function(vertex){
+  //lowest cost, non-visited vertex
+  nextVertex(){
+   const candidates = this.getCandidateVertices();
+   //if there are candidates, find the one
+   //with lowest cost
+   if(candidates.length > 0){
+     return candidates.reduce((prev, curr) => {
+       return prev.cost < curr.cost ? prev : curr;
+     });
+   }else{
+     //otherwise return null
+     //this will help determine if we need to
+     //iterate
+     return null;
+   }
+  };
+  //update current cost
+  setCurrentCost(vertex, cost){
+    this.getEntry(vertex).cost =cost;
+  };
+  setAsVisited(vertex){
+    this.getEntry(vertex).visited = true;
+  };
+  getEntry(vertex){
+    return this.table.find(entry => entry.name == vertex);
+  };
+  getCost(vertex){
     return this.getEntry(vertex).cost;
+  };
+  toString(){
+    console.log(this.table);
   }
-
-  //for display purposes
-  this.toString = function(){
-    console.log(table);
-  }
-
-}
-var memo = new MemoTable();
-
-//this is our graph, relationships between vertices
-//with costs associated
-var graph = [
+};
+//the vertices for our memo table
+//I could also use a filter or map on the graph below
+//to avoid duplication; but this is nice
+//and clear
+const vertices = ["A", "B","C", "D", "E"];
+//our graph
+const graph = [
   {from : "S", to :"A", cost: 4},
   {from : "S", to :"E", cost: 2},
   {from : "A", to :"D", cost: 3},
@@ -87,41 +68,35 @@ var graph = [
   {from : "D", to :"A", cost: 1},
   {from : "E", to: "D", cost: 1}
 ];
-
-var evaluate = function(vertex){
-
-  //get the outgoing edges for this vertex
-  var edges = graph.filter(function(path){
+//create the table
+const memo = new MemoTable(vertices);
+//let's do this!
+const evaluate = vertex => {
+  //get the outgoing edges of the vertex
+  const edges = graph.filter(path => {
     return path.from === vertex.name;
   });
-
-  //iterate over the edges and set the costs
-  edges.forEach(function(edge){
-    //the cost of the edge under evaluation
-    var edgeCost = edge.cost;
-
-    var currentVertexCost = memo.getCost(edge.from);
-    var toVertexCost = memo.getCost(edge.to);
-
-    //the proposed cost from S to the current vertex
-    var tentativeCost = currentVertexCost + edgeCost;
-
-    //if it's less, update the memo table
+  //loop the edges...
+  for(edge of edges){
+    //calculate the costs
+    const currentVertexCost = memo.getCost(edge.from);
+    const toVertexCost = memo.getCost(edge.to);
+    const tentativeCost = currentVertexCost + edge.cost;
+    //if we can improve the cost to the
+    //connected vertex...
     if(tentativeCost < toVertexCost){
+      //do it!
       memo.setCurrentCost(edge.to, tentativeCost);
     }
-  });
-
-  //this vertex has been visited
+  };
+  //set this vertex as visited
   memo.setAsVisited(vertex.name);
-
   //get the next vertex
-  var next = memo.nextVertex();
-
-  //recurse
+  const next = memo.nextVertex();
+  //if there is a next vertex, let's do this
+  //again...
   if(next) evaluate(next);
 }
-
-//kick it off!
-evaluate(memo.source());
+//kick it off from the source vertex
+evaluate(memo.S);
 memo.toString();

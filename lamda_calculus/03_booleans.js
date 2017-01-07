@@ -1,15 +1,9 @@
-//represents 0, or false
-let zero = (x => y => y);
-console.log(zero(true)(false));
+const True = (x => y => x);
 
-//represents 1, or true
-let one = (x => y => x);
-console.log(one(true)(false));
+const False = (x => y => y);
 
-//conditional returning true
-let trueCond = (b => x => y => b);
-console.log(trueCond(true)(false)(0))
+//conditional statement
+const If = (x => y => z => x(y)(z));
 
-//conditional returning false
-let falseCond = (b => x => y => b);
-console.log(falseCond(false)(true)(0))
+console.log(If(True)("TRUE")("FALSE"));
+console.log(If(False)("TRUE")("FALSE"));

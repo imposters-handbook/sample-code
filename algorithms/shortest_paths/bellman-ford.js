@@ -27,40 +27,32 @@ var graph = [
 ];
 
 //represents a full iteration of Bellman-Ford on our graph
-var iterate = function(){
-
-  //check each vertex
-  for(var i = 0; i < vertices.length; i++){
-
-    //get the reference vertex
-    var fromVertex = vertices[i];
-
-    //get the outgoing edges for this vertex
-    var edges = graph.filter(function(path){
+const iterate = () => {
+  //do we need another iteration?
+  //decided below
+  var doItAgain = false;
+  //loop all vertices
+  for(fromVertex of vertices){
+    //get the outgoing edges
+    const edges = graph.filter(path => {
       return path.from === fromVertex;
     });
-
-    //iterate over the edges and set the costs
-    edges.forEach(function(edge){
-
-      //the cost of the edge under evaluation
-      var edgeCost = edge.cost;
-
-      //the existing cost of the current vertex from S
-      var currentVertexCost = memo[edge.from];
-
-      //the proposed cost from S to the current vertex
-      var potentialCost = currentVertexCost + edgeCost;
-
-      //if it's less, update the memo table
+    //loop the outgoing edges
+    for(edge of edges){
+      const potentialCost = memo[edge.from] + edge.cost;
+      //reset the cost as needed
       if(potentialCost < memo[edge.to]){
         memo[edge.to] = potentialCost;
+        //if the cost was changed we need to loop again
+        doItAgain = true;
       }
-    });
-  };
-};
-
-for(var i = 0; i < vertices.length -1; i++){
-  iterate();
+    }
+  }
+  //return the flag
+  return doItAgain;
+}
+for(vertex of vertices){
+  //loop until no changes
+  if(!iterate()) break;
 }
 console.log(memo);

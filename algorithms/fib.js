@@ -1,6 +1,6 @@
-var calculateFibAt = function(n){
+//the slow way
+const calculateFibAt = (n) => {
   fibCount = fibCount+1;
-  var calc;
   if(n < 2){
     return n;
   }else{
@@ -13,33 +13,17 @@ for(var i = 0; i<=10; i++){
   console.log(calculateFibAt(i));
 }
 
+//the ES6 lambda way...
+const fib = n => n < 2 ? n : fib(n-2) + fib(n-1);
 
-var fibCount=0;
-var calculateFibAt = function(n){
-  fibCount = fibCount+1;
-  var calc;
-  if(n < 2){
-    return n;
-  }else{
-    return calculateFibAt(n-2) + calculateFibAt(n-1);
+//the fast way
+const calculateFibFaster = (n) =>{
+  var memoTable = [0,1];
+  for(var i=2;i<=n;i++){
+    memoTable.push(memoTable[i-2] + memoTable[i-1])
   }
-}
-
-for(var i = 0; i<=10; i++){
-  var fib = calculateFibAt(i);
-  console.log("The Fibonacci number at position " + i +
-  " is " + fib + "; It took " + fibCount + " calls to fib to get here");
-}
-
-
-var fibFaster =function(n){
-  var sequence = [0,1];
-  var fibs
-  for(var i=2; i<=n; i++){
-    sequence.push(sequence[i -2] + sequence[i-1]);
-  }
-  return sequence;
-}
+  return memoTable;
+};
 
 //run it the fast way
 console.log(fibFaster(10));
