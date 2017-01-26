@@ -11,7 +11,7 @@ const quickSort = (list) => {
   //remove the pivot from the list as we don't want to compare it
   list = list.slice(0,pivot).concat(list.slice(pivot + 1));
   //loop the list, comparing the partition values
-  for (var item in list) {
+  for (var item of list) {
     item < pivotValue ? left.push(item) : right.push(item);
   }
   //recursively move through left/right lists
