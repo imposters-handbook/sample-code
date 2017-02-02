@@ -14,13 +14,14 @@ for(var i = 0; i<=10; i++){
 }
 
 //the ES6 lambda way...
+
 const fib = n => n < 2 ? n : fib(n-2) + fib(n-1);
 
 //the fast way
 const calculateFibFaster = (n) =>{
   var memoTable = [0,1];
   for(var i=2;i<=n;i++){
-    memoTable.push(memoTable[i-2] + memoTable[i-1])
+    memoTable.push(memoTable[i-2] + memoTable[i-1]);
   }
   return memoTable;
 };
