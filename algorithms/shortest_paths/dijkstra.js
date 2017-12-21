@@ -100,3 +100,31 @@ const evaluate = vertex => {
 //kick it off from the source vertex
 evaluate(memo.S);
 memo.toString();
+
+
+
+[ { name: 'S', cost: 0, visited: true },
+{ name: 'A', cost: 4, visited: true },
+{ name: 'B', cost: 7, visited: true },
+{ name: 'C', cost: 6, visited: true },
+{ name: 'D', cost: 3, visited: true },
+{ name: 'E', cost: 2, visited: true } ]
+
+
+{keyword, "if"}
+{paren, }
+{variable, "x"}
+{operator, "=="}
+{number, "10"}
+{left-brace, }
+
+var x = 12;
+var squareIt = function(x){
+    return x * x;
+};
+y = squareIt(x);
+console.log(y);
+
+var x;
+console.log(x);
+x = "Hello!";

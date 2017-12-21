@@ -23,3 +23,25 @@ const selectionSort = (list) => {
   return list;
 };
 console.log(selectionSort(list));
+
+
+
+const hasDuplicates = function(num){
+  //loop the list, our O(n) op
+  for(let i = 0; i < nums.length; i++){
+    const thisNum = nums[i];
+    //loop the list again, the O(n^2) op
+    for(let j = 0; j < nums.length; j++){
+      //make sure we're not checking same number
+      if(j !== i){
+        const otherNum = nums[j];
+        //if there's an equal value, return
+        if(otherNum === thisNum) return true;
+      }
+    }
+  }
+  //if we're here, no dups
+  return false;
+}
+const nums = [1,2,3,4,5,5];
+hasDuplicates(nums);//true
