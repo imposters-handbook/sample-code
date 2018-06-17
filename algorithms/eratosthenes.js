@@ -10,6 +10,9 @@ const sieve = (n) => {
   const limit = Math.sqrt(n);
   //loop up to limit
   for (var i = 2; i <= limit; i++) {
+    //if i is already marked, all multiples
+    //of it must already be marked, so skip
+    if(grid[i].marked) continue;
     //figure out the multiples of i
     for(var x = i + i; x <= n; x += i){
       //mark the multiples of i
