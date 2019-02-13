@@ -26,7 +26,7 @@ var graph = [
   {from : "E", to: "D", cost: 8}
 ];
 
-var negativeCycle = [
+var negativeCycleGraph = [
   {from : "S", to :"A", cost: 4},
   {from : "S", to :"E", cost: 5},
   {from : "A", to :"C", cost: -6},
@@ -97,4 +97,4 @@ const findShortestPath = (vertices, graph) => {
 }
 
 console.log(findShortestPath(vertices, graph));
-console.log(findShortestPath(vertices, NegativeCyclegraph));
+console.log(findShortestPath(vertices, NegativeCycleGraph));
