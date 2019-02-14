@@ -16,13 +16,24 @@ var memo = {
 //this is our graph, relationships between vertices
 //with costs associated
 var graph = [
-  {from : "S", to : "A", cost: 4},
+  {from : "S", to :"A", cost: 4},
   {from : "S", to :"E", cost: -5},
   {from : "A", to :"C", cost: 6},
   {from : "B", to :"A", cost: 3},
   {from : "C", to :"B", cost: -2},
-  {from : "D", to :"C", cost: 3},
   {from : "D", to :"A", cost: 10},
+  {from : "D", to :"C", cost: 3},
+  {from : "E", to: "D", cost: 8}
+];
+
+var negativeCycleGraph = [
+  {from : "S", to :"A", cost: 4},
+  {from : "S", to :"E", cost: 5},
+  {from : "A", to :"C", cost: -6},
+  {from : "B", to :"A", cost: -3},
+  {from : "C", to :"B", cost: -2},
+  {from : "D", to :"A", cost: 10},
+  {from : "D", to :"C", cost: 3},
   {from : "E", to: "D", cost: 8}
 ];
 
@@ -51,8 +62,39 @@ const iterate = () => {
   //return the flag
   return doItAgain;
 }
-for(vertex of vertices){
-  //loop until no changes
-  if(!iterate()) break;
+
+const checkForNegativeCycles = (vertex, graph, memo) => {
+  let negativeCycle = false;
+  const edges = graph.filter(edge => edge.from === vertex)
+
+  // evaluate a potential negative cycle
+  edges.forEach(edge => {
+    const costTo = memo[edge.to]
+    const costFrom = memo[edge.from] + edge.cost
+    if (costTo > costFrom) {
+        negativeCycle = true;
+    }
+  })
+  return negativeCycle;;
 }
-console.log(memo);
+
+
+const findShortestPath = (vertices, graph) => {
+
+  let iterations = vertices.length - 1;
+  while ( iterations > 0 ) {
+    if (!iterate(graph, memo)){ iterations = 0; }
+    iterations -= 1;
+  }
+  debugger;
+  for (let vertex of vertices) {
+    if (checkForNegativeCycles(vertex, graph, memo)) {
+      return `Negative cycle!`
+    }
+  }
+
+  return memo;
+}
+
+console.log(findShortestPath(vertices, graph));
+console.log(findShortestPath(vertices, NegativeCycleGraph));
