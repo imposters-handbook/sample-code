@@ -11,7 +11,12 @@ const binarySearch = (list, lookFor) => {
     //if we've landed on it...
     if(list[middle] === lookFor){
       return middle;
-    }else{
+    }
+    //prevent infinite loop when lookFor element is not present in input list
+    if((middle === 0 || middle === list.length -1) && list[middle] !== lookFor){ 
+     return -1; 
+    }
+    else{
       //if we haven't landed on it, where is it?
       //if the middle is less than the value we're
       //looking for, reset the min
